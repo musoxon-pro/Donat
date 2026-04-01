@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Donat | Qo'llab-quvvatlash</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #e0eaf4 0%, #cfdef3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', sans-serif;
+            padding: 20px;
+        }
+
+        /* asosiy karta - oddiy va toza */
+        .card {
+            max-width: 480px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 28px 24px 32px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        /* profil qismi */
+        .profile {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: #1e2a3e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            font-size: 40px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1e293b;
+            letter-spacing: -0.3px;
+        }
+
+        .username {
+            color: #5b6e8c;
+            font-size: 15px;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* karta ko'rinishi (plastik karta stilida) */
+        .plastic-card {
+            background: linear-gradient(135deg, #1a2a3f 0%, #0f172a 100%);
+            border-radius: 24px;
+            padding: 22px 20px;
+            margin: 20px 0 18px;
+            color: white;
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .chip {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 32px;
+        }
+
+        .chip-icon {
+            font-size: 32px;
+            letter-spacing: 2px;
+        }
+
+        .card-number {
+            font-family: 'Courier New', 'SF Mono', monospace;
+            font-size: 20px;
+            letter-spacing: 2.5px;
+            font-weight: 600;
+            margin: 20px 0 20px;
+            word-break: break-all;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 0;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 8px;
+        }
+
+        .valid {
+            font-size: 12px;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+
+        .valid span {
+            font-size: 15px;
+            font-weight: 600;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .cardholder {
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .visa-badge {
+            font-size: 28px;
+            font-weight: 700;
+            font-family: monospace;
+            font-style: italic;
+            letter-spacing: 2px;
+        }
+
+        /* nusxalash tugmasi */
+        .copy-area {
+            text-align: center;
+            margin: 12px 0 20px;
+        }
+
+        .copy-btn {
+            background: #f1f5f9;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .copy-btn:active {
+            background: #cbd5e1;
+            transform: scale(0.96);
+        }
+
+        /* anonim va summalar */
+        .anonymous {
+            background: #f8fafc;
+            text-align: center;
+            padding: 12px;
+            border-radius: 40px;
+            margin: 18px 0;
+            font-weight: 600;
+            color: #334155;
+            font-size: 14px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .amount-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .amount {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 18px;
+            color: #0f172a;
+            cursor: pointer;
+            transition: 0.2s;
+            min-width: 75px;
+            text-align: center;
+        }
+
+        .amount:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        /* havolalar (linklar) pastki qism */
+        .links-section {
+            margin-top: 28px;
+            border-top: 1px solid #eef2f6;
+            padding-top: 24px;
+        }
+
+        .links-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #5b6e8c;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .link-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8fafc;
+            padding: 14px 20px;
+            border-radius: 60px;
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 500;
+            transition: 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .link-item:hover {
+            background: #ffffff;
+            border-color: #94a3b8;
+            transform: translateX(5px);
+        }
+
+        .link-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .link-icon {
+            font-size: 22px;
+        }
+
+        .coffee-special {
+            background: #fef7e0;
+            border-color: #fbbf24;
+            margin-top: 6px;
+        }
+
+        .coffee-special .link-left span:first-child {
+            font-size: 22px;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <!-- profil / avatar -->
+    <div class="profile">
+        <div class="avatar">🎮</div>
+        <h2>mUSOXON_</h2>
+        <div class="username">@musoxon_creator</div>
+    </div>
+
+    <!-- plastik kartaga o'xshash qism (rasmdagidek) -->
+    <div class="plastic-card">
+        <div class="chip">
+            <div class="chip-icon">💳</div>
+            <div class="visa-badge">VISA</div>
+        </div>
+        <div class="card-number" id="cardNumber">4629 9257 0189 4327</div>
+        <div class="card-details">
+            <div class="valid">
+                Valid till
+                <span>09/24</span>
+            </div>
+            <div class="cardholder">Mahtamun Hoque</div>
+        </div>
+    </div>
+
+    <!-- nusxalash tugmasi -->
+    <div class="copy-area">
+        <button class="copy-btn" id="copyBtn">📋 Karta raqamini nusxalash</button>
+    </div>
+
+    <!-- anonim va summalar -->
+    <div class="anonymous">
+        🔒 АНОНИМНО / ANONIM
+    </div>
+    <div class="amount-row">
+        <div class="amount" data-val="10">10 RUB</div>
+        <div class="amount" data-val="20">20 ₽</div>
+        <div class="amount" data-val="50">50 ₽</div>
+        <div class="amount" data-val="100">100 ₽</div>
+    </div>
+
+    <!-- PASTGI QISM: HAVOLALAR (linklar) -->
+    <div class="links-section">
+        <div class="links-title">🔗 HAVOLALAR</div>
+        <div class="link-buttons">
+            <a href="https://instagram.com/musoxon_" target="_blank" class="link-item">
+                <div class="link-left">
+                    <span class="link-icon">📷</span>
+                    <span>Instagram</span>
+                </div>
+                <span>➡️</span>
+            </a>
+            <a href="https://t.me/musoxon_" target="_blank" class="link-item">
+                <div class="link-left">
+                    <span class="link-icon">💬</span>
+                    <span>Telegram</span>
+                </div>
+                <span>➡️</span>
+            </a>
+            <a href="https://youtube.com/@musoxon_" target="_blank" class="link-item">
+                <div class="link-left">
+                    <span class="link-icon">▶️</span>
+                    <span>YouTube</span>
+                </div>
+                <span>➡️</span>
+            </a>
+            <a href="https://payme.uz/@musoxon_" target="_blank" class="link-item">
+                <div class="link-left">
+                    <span class="link-icon">💸</span>
+                    <span>Payme</span>
+                </div>
+                <span>➡️</span>
+            </a>
+            <a href="https://click.uz/@musoxon_" target="_blank" class="link-item">
+                <div class="link-left">
+                    <span class="link-icon">🔘</span>
+                    <span>Click</span>
+                </div>
+                <span>➡️</span>
+            </a>
+            <a href="https://www.buymeacoffee.com/musoxon_" target="_blank" class="link-item coffee-special">
+                <div class="link-left">
+                    <span class="link-icon">☕</span>
+                    <span>Buy me a coffee</span>
+                </div>
+                <span>➡️</span>
+            </a>
+        </div>
+    </div>
+    <footer>
+        o'yin yaratuvchisini qo'llab-quvvatlang 🤍
+    </footer>
+</div>
+
+<script>
+    const copyButton = document.getElementById('copyBtn');
+    const cardNumberElement = document.getElementById('cardNumber');
+
+    copyButton.addEventListener('click', async () => {
+        const number = cardNumberElement.innerText;
+        try {
+            await navigator.clipboard.writeText(number);
+            const originalText = copyButton.innerText;
+            copyButton.innerText = '✅ Nusxalandi!';
+            copyButton.style.background = '#dcfce7';
+            setTimeout(() => {
+                copyButton.innerText = originalText;
+                copyButton.style.background = '#f1f5f9';
+            }, 1800);
+        } catch (err) {
+            alert('Kartani nusxalang: ' + number);
+        }
+    });
+
+    // summa tugmalariga bosganda faqat visual xabar (to'lov yo'q)
+    const amounts = document.querySelectorAll('.amount');
+    amounts.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const value = btn.getAttribute('data-val');
+            const msg = document.createElement('div');
+            msg.innerText = `✨ ${value} RUB miqdori tanlandi. Karta yoki Payme/Click orqali yordam bering ✨`;
+            msg.style.position = 'fixed';
+            msg.style.bottom = '20px';
+            msg.style.left = '20px';
+            msg.style.right = '20px';
+            msg.style.backgroundColor = '#1e293b';
+            msg.style.color = '#facc15';
+            msg.style.padding = '14px 18px';
+            msg.style.borderRadius = '50px';
+            msg.style.fontWeight = '600';
+            msg.style.textAlign = 'center';
+            msg.style.zIndex = '999';
+            msg.style.fontSize = '14px';
+            msg.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)';
+            document.body.appendChild(msg);
+            setTimeout(() => msg.remove(), 2500);
+        });
+    });
+</script>
+</body>
+</html>
