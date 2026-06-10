@@ -25,7 +25,9 @@
       overflow-x: hidden;
     }
 
-    /* Fon uchun dekorativ elementlar */
+    /* ----- LOOP ANIMATSIYALAR UCHUN FON ELEMENTLARI ----- */
+    
+    /* Asosiy aylanuvchi gradient fon */
     body::before {
       content: '';
       position: fixed;
@@ -34,19 +36,145 @@
       width: 200%;
       height: 200%;
       background: 
-        radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 50% 80%, rgba(255, 217, 61, 0.2) 0%, transparent 50%);
-      animation: bgMove 20s ease-in-out infinite;
+        radial-gradient(circle at 30% 40%, rgba(255, 107, 107, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(78, 205, 196, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 217, 61, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(168, 85, 247, 0.3) 0%, transparent 50%);
+      animation: bgRotate 20s linear infinite;
       z-index: 0;
     }
 
-    @keyframes bgMove {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      33% { transform: translate(2%, -1%) rotate(1deg); }
-      66% { transform: translate(-1%, 2%) rotate(-1deg); }
+    @keyframes bgRotate {
+      0% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(90deg) scale(1.1); }
+      50% { transform: rotate(180deg) scale(1.2); }
+      75% { transform: rotate(270deg) scale(1.1); }
+      100% { transform: rotate(360deg) scale(1); }
     }
 
+    /* Pulsatsiyalanuvchi doiralar */
+    .bg-circle {
+      position: fixed;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .bg-circle-1 {
+      width: 300px;
+      height: 300px;
+      top: -100px;
+      left: -50px;
+      animation: floatCircle1 8s ease-in-out infinite;
+    }
+
+    .bg-circle-2 {
+      width: 200px;
+      height: 200px;
+      bottom: -50px;
+      right: -30px;
+      animation: floatCircle2 10s ease-in-out infinite;
+    }
+
+    .bg-circle-3 {
+      width: 150px;
+      height: 150px;
+      top: 50%;
+      left: 60%;
+      animation: floatCircle3 6s ease-in-out infinite;
+    }
+
+    @keyframes floatCircle1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(50px, -30px) scale(1.2); }
+      66% { transform: translate(-20px, 40px) scale(0.9); }
+    }
+
+    @keyframes floatCircle2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(-40px, 20px) scale(1.3); }
+      66% { transform: translate(30px, -30px) scale(0.8); }
+    }
+
+    @keyframes floatCircle3 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-30px, -40px) scale(1.4); }
+    }
+
+    /* Zarrachalar (particles) */
+    .particles-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: particleFloat linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* To'lqinli chiziqlar */
+    .wave-line {
+      position: fixed;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      z-index: 0;
+      pointer-events: none;
+      animation: waveMove 4s ease-in-out infinite;
+    }
+
+    .wave-line:nth-child(1) { top: 20%; animation-delay: 0s; }
+    .wave-line:nth-child(2) { top: 40%; animation-delay: 0.5s; }
+    .wave-line:nth-child(3) { top: 60%; animation-delay: 1s; }
+    .wave-line:nth-child(4) { top: 80%; animation-delay: 1.5s; }
+
+    @keyframes waveMove {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    /* Yulduzchalar */
+    .star {
+      position: fixed;
+      background: white;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      z-index: 0;
+      pointer-events: none;
+      animation: starTwinkle 3s ease-in-out infinite;
+    }
+
+    @keyframes starTwinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+      50% { opacity: 0.8; transform: scale(1.5) rotate(180deg); }
+    }
+
+    /* Asosiy konteyner */
     .glass-panel {
       width: 100%;
       max-width: 500px;
@@ -67,6 +195,12 @@
       position: relative;
       z-index: 1;
       border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: panelGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes panelGlow {
+      0%, 100% { box-shadow: 0 30px 60px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255,255,255,0.3); }
+      50% { box-shadow: 0 30px 60px rgba(118, 75, 162, 0.5), inset 0 1px 0 rgba(255,255,255,0.5); }
     }
 
     /* Til tugmalari */
@@ -88,6 +222,12 @@
       transition: all 0.3s ease;
       letter-spacing: 0.3px;
       backdrop-filter: blur(10px);
+      animation: buttonPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes buttonPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
 
     .lang-pill:hover {
@@ -102,6 +242,12 @@
       border: none;
       box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
       transform: scale(1.05);
+      animation: activeGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes activeGlow {
+      0%, 100% { box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4); }
+      50% { box-shadow: 0 12px 30px rgba(255, 107, 107, 0.8); }
     }
 
     /* Profil */
@@ -158,6 +304,12 @@
       transition: transform 0.3s ease;
       position: relative;
       overflow: hidden;
+      animation: cardShine 3s ease-in-out infinite;
+    }
+
+    @keyframes cardShine {
+      0%, 100% { background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #feca57 100%); }
+      50% { background: linear-gradient(135deg, #ff8e53 0%, #feca57 50%, #ff6b6b 100%); }
     }
 
     .card-container::before {
@@ -169,6 +321,12 @@
       height: 200px;
       background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
       border-radius: 50%;
+      animation: cardLight 4s ease-in-out infinite;
+    }
+
+    @keyframes cardLight {
+      0%, 100% { top: -30%; right: -20%; }
+      50% { top: -10%; right: 0%; }
     }
 
     .card-header {
@@ -211,6 +369,12 @@
       position: relative;
       z-index: 1;
       border: 1px solid rgba(255, 255, 255, 0.3);
+      animation: numberGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes numberGlow {
+      0%, 100% { border-color: rgba(255, 255, 255, 0.3); }
+      50% { border-color: rgba(255, 255, 255, 0.8); }
     }
 
     .card-footer {
@@ -260,6 +424,12 @@
       transition: all 0.3s ease;
       box-shadow: 0 8px 25px rgba(0,0,0,0.2);
       letter-spacing: 0.4px;
+      animation: copyPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes copyPulse {
+      0%, 100% { box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+      50% { box-shadow: 0 8px 35px rgba(255,107,107,0.4); }
     }
 
     .copy-btn:hover {
@@ -409,6 +579,20 @@
   </style>
 </head>
 <body>
+  <!-- Fon animatsiya elementlari -->
+  <div class="bg-circle bg-circle-1"></div>
+  <div class="bg-circle bg-circle-2"></div>
+  <div class="bg-circle bg-circle-3"></div>
+  
+  <div class="wave-line" style="top: 20%;"></div>
+  <div class="wave-line" style="top: 40%;"></div>
+  <div class="wave-line" style="top: 60%;"></div>
+  <div class="wave-line" style="top: 80%;"></div>
+  
+  <div class="particles-container" id="particlesContainer"></div>
+  
+  <div id="starsContainer"></div>
+
   <div class="glass-panel">
     <!-- Til almashtirish -->
     <div class="language-row">
@@ -511,6 +695,45 @@
 
   <script>
     (function() {
+      // ===== ZARRACHALAR YARATISH =====
+      const particlesContainer = document.getElementById('particlesContainer');
+      const particleCount = 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        const size = Math.random() * 4 + 2;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particle.style.animationDelay = Math.random() * 10 + 's';
+        particle.style.opacity = Math.random() * 0.5 + 0.1;
+        
+        particlesContainer.appendChild(particle);
+      }
+
+      // ===== YULDUZCHALAR YARATISH =====
+      const starsContainer = document.getElementById('starsContainer');
+      const starCount = 15;
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        const size = Math.random() * 10 + 5;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.left = Math.random() * 90 + '%';
+        star.style.top = Math.random() * 90 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        
+        starsContainer.appendChild(star);
+      }
+
+      // ===== TARJIMALAR =====
       const translations = {
         uz: {
           profileName: "Musoxon G",
