@@ -1,882 +1,789 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Musoxon · Qo'llab-quvvatlash</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      padding: 16px;
-      margin: 0;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    /* ----- LOOP ANIMATSIYALAR UCHUN FON ELEMENTLARI ----- */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musoxon · Donat | Qo'llab-quvvatlash</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    /* Asosiy aylanuvchi gradient fon */
-    body::before {
-      content: '';
-      position: fixed;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: 
-        radial-gradient(circle at 30% 40%, rgba(255, 107, 107, 0.4) 0%, transparent 50%),
-        radial-gradient(circle at 70% 60%, rgba(78, 205, 196, 0.4) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(255, 217, 61, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 20% 80%, rgba(168, 85, 247, 0.3) 0%, transparent 50%);
-      animation: bgRotate 20s linear infinite;
-      z-index: 0;
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    @keyframes bgRotate {
-      0% { transform: rotate(0deg) scale(1); }
-      25% { transform: rotate(90deg) scale(1.1); }
-      50% { transform: rotate(180deg) scale(1.2); }
-      75% { transform: rotate(270deg) scale(1.1); }
-      100% { transform: rotate(360deg) scale(1); }
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0c0b14;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
 
-    /* Pulsatsiyalanuvchi doiralar */
-    .bg-circle {
-      position: fixed;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-      z-index: 0;
-      pointer-events: none;
-    }
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
 
-    .bg-circle-1 {
-      width: 300px;
-      height: 300px;
-      top: -100px;
-      left: -50px;
-      animation: floatCircle1 8s ease-in-out infinite;
-    }
+        .main-wrapper {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
 
-    .bg-circle-2 {
-      width: 200px;
-      height: 200px;
-      bottom: -50px;
-      right: -30px;
-      animation: floatCircle2 10s ease-in-out infinite;
-    }
+        .glass-card {
+            width: 100%;
+            max-width: 520px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 40px;
+            padding: 2.5rem 2rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            animation: cardFloat 6s ease-in-out infinite;
+        }
 
-    .bg-circle-3 {
-      width: 150px;
-      height: 150px;
-      top: 50%;
-      left: 60%;
-      animation: floatCircle3 6s ease-in-out infinite;
-    }
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
 
-    @keyframes floatCircle1 {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(50px, -30px) scale(1.2); }
-      66% { transform: translate(-20px, 40px) scale(0.9); }
-    }
+        .lang-switcher {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 2rem;
+        }
 
-    @keyframes floatCircle2 {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(-40px, 20px) scale(1.3); }
-      66% { transform: translate(30px, -30px) scale(0.8); }
-    }
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Inter', sans-serif;
+            backdrop-filter: blur(10px);
+        }
 
-    @keyframes floatCircle3 {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-30px, -40px) scale(1.4); }
-    }
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
 
-    /* Zarrachalar (particles) */
-    .particles-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
+        .lang-btn.active {
+            background: linear-gradient(135deg, #b184ff, #ff8a8a);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 8px 25px rgba(177, 132, 255, 0.3);
+            animation: glowPulse 2s ease-in-out infinite;
+        }
 
-    .particle {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      animation: particleFloat linear infinite;
-      opacity: 0;
-    }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 8px 25px rgba(177, 132, 255, 0.3); }
+            50% { box-shadow: 0 12px 35px rgba(177, 132, 255, 0.6); }
+        }
 
-    @keyframes particleFloat {
-      0% {
-        transform: translateY(100vh) scale(0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-100vh) scale(1);
-        opacity: 0;
-      }
-    }
+        .profile-area {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-    /* To'lqinli chiziqlar */
-    .wave-line {
-      position: fixed;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      z-index: 0;
-      pointer-events: none;
-      animation: waveMove 4s ease-in-out infinite;
-    }
+        .avatar-ring {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
 
-    .wave-line:nth-child(1) { top: 20%; animation-delay: 0s; }
-    .wave-line:nth-child(2) { top: 40%; animation-delay: 0.5s; }
-    .wave-line:nth-child(3) { top: 60%; animation-delay: 1s; }
-    .wave-line:nth-child(4) { top: 80%; animation-delay: 1.5s; }
+        .avatar-ring::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b184ff, #ff8a8a, #b184ff);
+            animation: ringRotate 3s linear infinite;
+            filter: blur(8px);
+            opacity: 0.6;
+        }
 
-    @keyframes waveMove {
-      0%, 100% { transform: translateX(-100%); }
-      50% { transform: translateX(100%); }
-    }
+        @keyframes ringRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-    /* Yulduzchalar */
-    .star {
-      position: fixed;
-      background: white;
-      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-      z-index: 0;
-      pointer-events: none;
-      animation: starTwinkle 3s ease-in-out infinite;
-    }
+        .avatar-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #1a1530, #2a1f40);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            z-index: 1;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
 
-    @keyframes starTwinkle {
-      0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
-      50% { opacity: 0.8; transform: scale(1.5) rotate(180deg); }
-    }
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff, #e0d0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
 
-    /* Asosiy konteyner */
-    .glass-panel {
-      width: 100%;
-      max-width: 500px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border-radius: 48px;
-      padding: 28px 24px 36px;
-      display: flex;
-      flex-direction: column;
-      gap: 26px;
-      box-shadow: 
-        0 30px 60px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      color: #ffffff;
-      position: relative;
-      z-index: 1;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      animation: panelGlow 4s ease-in-out infinite;
-    }
+        .profile-handle {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.5);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
 
-    @keyframes panelGlow {
-      0%, 100% { box-shadow: 0 30px 60px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255,255,255,0.3); }
-      50% { box-shadow: 0 30px 60px rgba(118, 75, 162, 0.5), inset 0 1px 0 rgba(255,255,255,0.5); }
-    }
+        .bank-card {
+            background: linear-gradient(145deg, #1a1530, #2a1f40);
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(177, 132, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
 
-    /* Til tugmalari */
-    .language-row {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-    }
+        .bank-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(177, 132, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: cardLight 4s ease-in-out infinite;
+        }
 
-    .lang-pill {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 8px 16px;
-      border-radius: 40px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #ffffff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      letter-spacing: 0.3px;
-      backdrop-filter: blur(10px);
-      animation: buttonPulse 3s ease-in-out infinite;
-    }
+        @keyframes cardLight {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-30px, -30px); }
+        }
 
-    @keyframes buttonPulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
 
-    .lang-pill:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-1px);
-    }
+        .chip-icon {
+            font-size: 2rem;
+            opacity: 0.8;
+        }
 
-    .lang-pill.active {
-      background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-      color: white;
-      font-weight: 700;
-      border: none;
-      box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
-      transform: scale(1.05);
-      animation: activeGlow 2s ease-in-out infinite;
-    }
+        .card-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-style: italic;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.8);
+        }
 
-    @keyframes activeGlow {
-      0%, 100% { box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4); }
-      50% { box-shadow: 0 12px 30px rgba(255, 107, 107, 0.8); }
-    }
+        .card-number-display {
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            margin: 1rem 0;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255,255,255,0.1);
+            word-spacing: 6px;
+        }
 
-    /* Profil */
-    .profile-section {
-      text-align: center;
-    }
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            position: relative;
+            z-index: 1;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+        }
 
-    .avatar-circle {
-      width: 90px;
-      height: 90px;
-      background: linear-gradient(135deg, #ff6b6b, #ffa500);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 14px;
-      font-size: 44px;
-      box-shadow: 
-        0 15px 35px rgba(255, 107, 107, 0.4),
-        0 0 0 3px rgba(255, 255, 255, 0.3);
-      animation: float 3s ease-in-out infinite;
-      position: relative;
-    }
+        .valid-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            opacity: 0.5;
+            display: block;
+            margin-bottom: 2px;
+        }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
+        .card-owner-name {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+            color: rgba(255,255,255,0.8);
+        }
 
-    .display-name {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      color: white;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    }
+        .copy-section {
+            text-align: center;
+            margin: 1rem 0 1.5rem;
+        }
 
-    .user-handle {
-      font-size: 16px;
-      color: rgba(255, 255, 255, 0.8);
-      margin-top: 4px;
-      font-weight: 500;
-    }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+        }
 
-    /* Karta */
-    .card-container {
-      background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #feca57 100%);
-      border-radius: 30px;
-      padding: 22px 20px 18px;
-      box-shadow: 
-        0 25px 40px rgba(255, 107, 107, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      margin: 6px 0 8px;
-      transition: transform 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      animation: cardShine 3s ease-in-out infinite;
-    }
+        .copy-btn:hover {
+            background: rgba(177, 132, 255, 0.2);
+            border-color: rgba(177, 132, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(177, 132, 255, 0.3);
+        }
 
-    @keyframes cardShine {
-      0%, 100% { background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #feca57 100%); }
-      50% { background: linear-gradient(135deg, #ff8e53 0%, #feca57 50%, #ff6b6b 100%); }
-    }
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
 
-    .card-container::before {
-      content: '';
-      position: absolute;
-      top: -30%;
-      right: -20%;
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-      border-radius: 50%;
-      animation: cardLight 4s ease-in-out infinite;
-    }
+        .anonymous-badge {
+            text-align: center;
+            padding: 0.8rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            letter-spacing: 0.5px;
+        }
 
-    @keyframes cardLight {
-      0%, 100% { top: -30%; right: -20%; }
-      50% { top: -10%; right: 0%; }
-    }
+        .links-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
 
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 22px;
-      position: relative;
-      z-index: 1;
-    }
+        .section-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: rgba(177, 132, 255, 0.7);
+            font-weight: 700;
+            margin-bottom: -0.5rem;
+        }
 
-    .chip-symbol {
-      font-size: 34px;
-      filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2));
-    }
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1rem 1.5rem;
+            border-radius: 60px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+        }
 
-    .card-type {
-      font-weight: 700;
-      font-size: 22px;
-      letter-spacing: 2px;
-      color: white;
-      font-style: italic;
-      font-family: 'Courier New', monospace;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
+        .link-item:hover {
+            background: rgba(177, 132, 255, 0.1);
+            border-color: rgba(177, 132, 255, 0.3);
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
 
-    .number-display {
-      font-family: 'Courier New', 'Fira Code', monospace;
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: 2.2px;
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(10px);
-      padding: 14px 6px;
-      border-radius: 18px;
-      text-align: center;
-      margin: 16px 0 20px;
-      word-spacing: 4px;
-      color: white;
-      position: relative;
-      z-index: 1;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      animation: numberGlow 3s ease-in-out infinite;
-    }
+        .link-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
 
-    @keyframes numberGlow {
-      0%, 100% { border-color: rgba(255, 255, 255, 0.3); }
-      50% { border-color: rgba(255, 255, 255, 0.8); }
-    }
+        .link-left i {
+            font-size: 1.5rem;
+            width: 2rem;
+            text-align: center;
+        }
 
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      font-size: 13px;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.9);
-      position: relative;
-      z-index: 1;
-    }
+        .link-arrow {
+            font-size: 1.2rem;
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
 
-    .valid-thru span:first-child {
-      font-size: 10px;
-      opacity: 0.8;
-      display: block;
-    }
+        .link-item:hover .link-arrow {
+            opacity: 1;
+            transform: translateX(5px);
+        }
 
-    .card-owner {
-      text-transform: uppercase;
-      font-weight: 600;
-      letter-spacing: 1px;
-      font-size: 15px;
-    }
+        .sponsor-link {
+            background: linear-gradient(135deg, rgba(177, 132, 255, 0.15), rgba(255, 138, 138, 0.15));
+            border-color: rgba(177, 132, 255, 0.3);
+            animation: sponsorGlow 3s ease-in-out infinite;
+        }
 
-    /* Nusxalash */
-    .copy-wrapper {
-      display: flex;
-      justify-content: center;
-      margin: 6px 0 2px;
-    }
+        @keyframes sponsorGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(177, 132, 255, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(177, 132, 255, 0.3); }
+        }
 
-    .copy-btn {
-      background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 12px 30px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 15px;
-      color: white;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-      letter-spacing: 0.4px;
-      animation: copyPulse 2s ease-in-out infinite;
-    }
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
 
-    @keyframes copyPulse {
-      0%, 100% { box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
-      50% { box-shadow: 0 8px 35px rgba(255,107,107,0.4); }
-    }
+        .footer-note a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
 
-    .copy-btn:hover {
-      background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.2));
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-    }
+        .footer-note a:hover {
+            color: #b184ff;
+        }
 
-    .copy-btn:active {
-      transform: scale(0.96) translateY(0);
-    }
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #b184ff, #ff8a8a);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            z-index: 100;
+            box-shadow: 0 15px 40px rgba(177, 132, 255, 0.4);
+            animation: toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
 
-    /* Anonim belgisi */
-    .private-badge {
-      text-align: center;
-      padding: 12px;
-      border-radius: 50px;
-      background: linear-gradient(135deg, rgba(78, 205, 196, 0.3), rgba(69, 183, 209, 0.3));
-      backdrop-filter: blur(10px);
-      font-weight: 600;
-      font-size: 14px;
-      color: white;
-      letter-spacing: 0.5px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
 
-    /* Linklar */
-    .links-block {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      margin-top: 4px;
-    }
-
-    .section-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: rgba(255, 255, 255, 0.7);
-      margin: 6px 0 2px 8px;
-      font-weight: 700;
-    }
-
-    .social-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .link-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px);
-      padding: 14px 20px;
-      border-radius: 60px;
-      text-decoration: none;
-      color: white;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .link-card:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: translateX(8px) scale(1.02);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-    }
-
-    .link-left-group {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .link-left-group i {
-      font-size: 26px;
-      width: 30px;
-      text-align: center;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
-    }
-
-    .sponsor-highlight {
-      background: linear-gradient(135deg, rgba(255, 217, 61, 0.25), rgba(255, 167, 38, 0.25));
-      border: 1px solid rgba(255, 217, 61, 0.4);
-      animation: glow 2s ease-in-out infinite;
-    }
-
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 4px 15px rgba(255, 217, 61, 0.3); }
-      50% { box-shadow: 0 8px 30px rgba(255, 217, 61, 0.6); }
-    }
-
-    footer {
-      text-align: center;
-      font-size: 12px;
-      margin-top: 12px;
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    footer a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    footer a:hover {
-      color: #ffd93d;
-    }
-
-    /* Toast */
-    .toast-popup {
-      position: fixed;
-      bottom: 30px;
-      left: 20px;
-      right: 20px;
-      background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-      color: white;
-      padding: 14px 20px;
-      border-radius: 50px;
-      font-weight: 600;
-      text-align: center;
-      z-index: 999;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 10px 30px rgba(255, 107, 107, 0.5);
-      animation: slideUp 0.3s ease;
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(100px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @media (max-width: 400px) {
-      .number-display {
-        font-size: 18px;
-        letter-spacing: 1.5px;
-      }
-      .glass-panel {
-        padding: 20px 18px 28px;
-      }
-    }
-  </style>
+        @media (max-width: 600px) {
+            .main-wrapper { padding: 1rem; }
+            .glass-card { padding: 1.5rem 1.2rem; border-radius: 30px; }
+            .card-number-display { font-size: 1rem; letter-spacing: 2px; }
+            .profile-name { font-size: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
-  <!-- Fon animatsiya elementlari -->
-  <div class="bg-circle bg-circle-1"></div>
-  <div class="bg-circle bg-circle-2"></div>
-  <div class="bg-circle bg-circle-3"></div>
-  
-  <div class="wave-line" style="top: 20%;"></div>
-  <div class="wave-line" style="top: 40%;"></div>
-  <div class="wave-line" style="top: 60%;"></div>
-  <div class="wave-line" style="top: 80%;"></div>
-  
-  <div class="particles-container" id="particlesContainer"></div>
-  
-  <div id="starsContainer"></div>
+    <div id="canvas-container"></div>
 
-  <div class="glass-panel">
-    <!-- Til almashtirish -->
-    <div class="language-row">
-      <button class="lang-pill active" data-lang="uz">🇺🇿 UZ</button>
-      <button class="lang-pill" data-lang="ru">🇷🇺 RU</button>
-      <button class="lang-pill" data-lang="en">🇬🇧 EN</button>
-    </div>
+    <div class="main-wrapper">
+        <div class="glass-card">
+            <!-- Til almashtirish -->
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="uz">UZ</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
 
-    <!-- Profil -->
-    <div class="profile-section">
-      <div class="avatar-circle">🎮</div>
-      <div class="display-name" id="profileName">Musoxon G</div>
-      <div class="user-handle" id="profileUsername">@musoxon_creator</div>
-    </div>
+            <!-- Profil -->
+            <div class="profile-area">
+                <div class="avatar-ring">
+                    <div class="avatar-inner">🎮</div>
+                </div>
+                <div class="profile-name" id="displayName">Musoxon G</div>
+                <div class="profile-handle" id="displayHandle">@musoxon_creator</div>
+            </div>
 
-    <!-- Karta -->
-    <div class="card-container">
-      <div class="card-header">
-        <span class="chip-symbol">💳</span>
-        <span class="card-type">Mastercard</span>
-      </div>
-      <div class="number-display" id="cardNumber">5476 3813 8075 2921</div>
-      <div class="card-footer">
-        <div class="valid-thru">
-          <span id="validLabel">Valid till</span>
-          <span>∞/∞</span>
+            <!-- Karta -->
+            <div class="bank-card">
+                <div class="card-top">
+                    <span class="chip-icon">💳</span>
+                    <span class="card-brand">Mastercard</span>
+                </div>
+                <div class="card-number-display" id="cardNumDisplay">5476 3813 8075 2921</div>
+                <div class="card-bottom">
+                    <div>
+                        <span class="valid-label" id="validText">Amal qilish muddati</span>
+                        <span>∞/∞</span>
+                    </div>
+                    <div class="card-owner-name">Musoxon G</div>
+                </div>
+            </div>
+
+            <!-- Nusxalash -->
+            <div class="copy-section">
+                <button class="copy-btn" id="copyButton">
+                    <i class="far fa-copy"></i>
+                    <span id="copyText">Karta raqamini nusxalash</span>
+                </button>
+            </div>
+
+            <div class="anonymous-badge" id="anonymousText">
+                🔒 ANONIM · MAXFIY
+            </div>
+
+            <!-- Linklar -->
+            <div class="links-section">
+                <div class="section-title" id="socialLabel">Ijtimoiy tarmoqlar</div>
+                
+                <a href="https://www.instagram.com/musoxon1202?igsh=MTBzMDJyNDUxMGFoZA==" target="_blank" class="link-item">
+                    <div class="link-left">
+                        <i class="fab fa-instagram" style="color: #E4405F;"></i>
+                        <span id="instaText">Instagram</span>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </a>
+
+                <a href="https://t.me/zetra_studio" target="_blank" class="link-item">
+                    <div class="link-left">
+                        <i class="fab fa-telegram-plane" style="color: #26A5E4;"></i>
+                        <span id="telegramText">Telegram</span>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </a>
+
+                <a href="https://youtube.com/@zetra-7?si=rqU8KEGs7fBLMh40" target="_blank" class="link-item">
+                    <div class="link-left">
+                        <i class="fab fa-youtube" style="color: #FF0000;"></i>
+                        <span id="youtubeText">YouTube</span>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </a>
+
+                <div class="section-title" id="donateLabel">Donat</div>
+
+                <a href="https://dalink.to/musoxon_" target="_blank" class="link-item">
+                    <div class="link-left">
+                        <span style="font-size:1.5rem;">💵</span>
+                        <span id="donationText">DonationAlerts</span>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </a>
+
+                <a href="som.html" target="_self" class="link-item">
+                    <div class="link-left">
+                        <span style="font-size:1.5rem;">💳</span>
+                        <span id="somText">So'mda Donat</span>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </a>
+
+                <div class="section-title" id="sponsorLabel">Homiylik</div>
+
+                <a href="https://musoxon-portfilio.vercel.app/" target="_blank" class="link-item sponsor-link">
+                    <div class="link-left">
+                        <span style="font-size:1.5rem;">☕</span>
+                        <span id="sponsorText">Homiylik yoki Hamkorlik</span>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </a>
+            </div>
+
+            <div class="footer-note">
+                <a href="#" id="footerLink">❤️ Yaratuvchini qo'llab-quvvatlang</a>
+            </div>
         </div>
-        <div class="card-owner">Musoxon G</div>
-      </div>
     </div>
 
-    <!-- Nusxalash -->
-    <div class="copy-wrapper">
-      <button class="copy-btn" id="copyButton">
-        <i class="far fa-copy"></i> <span id="copyText">Karta raqamini nusxalash</span>
-      </button>
-    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
-    <div class="private-badge" id="anonymousText">
-      🔒 ANONIM · MAXFIY
-    </div>
-
-    <!-- Linklar -->
-    <div class="links-block">
-      <div class="section-label" id="socialTitle">Ijtimoiy tarmoqlarda qo'llab-quvvatlang</div>
-      <div class="social-grid">
-        <a href="https://www.instagram.com/musoxon1202?igsh=MTBzMDJyNDUxMGFoZA==" target="_blank" class="link-card">
-          <div class="link-left-group">
-            <i class="fab fa-instagram" style="color: #ff6b9d;"></i>
-            <span id="instaLabel">Instagram</span>
-          </div>
-          <span>→</span>
-        </a>
-        <a href="https://t.me/zetra_studio" target="_blank" class="link-card">
-          <div class="link-left-group">
-            <i class="fab fa-telegram-plane" style="color: #64b5f6;"></i>
-            <span id="telegramLabel">Telegram</span>
-          </div>
-          <span>→</span>
-        </a>
-        <a href="https://youtube.com/@zetra-7?si=rqU8KEGs7fBLMh40" target="_blank" class="link-card">
-          <div class="link-left-group">
-            <i class="fab fa-youtube" style="color: #ff5252;"></i>
-            <span id="youtubeLabel">YouTube</span>
-          </div>
-          <span>→</span>
-        </a>
-      </div>
-
-      <div class="section-label" id="donateTitle">Donat orqali qo'llab-quvvatlang</div>
-      <a href="https://dalink.to/musoxon_" target="_blank" class="link-card">
-        <div class="link-left-group">
-          <span style="font-size:24px;">💵</span>
-          <span id="donationAlertsLabel">DonationAlerts</span>
-        </div>
-        <span>→</span>
-      </a>
-      <a href="som.html" target="_self" class="link-card">
-        <div class="link-left-group">
-          <span style="font-size:24px;">💳</span>
-          <span id="clickPaymeLabel">So'mda Donat</span>
-        </div>
-        <span>→</span>
-      </a>
-
-      <div class="section-label" id="sponsorTitle">Homiylik</div>
-      <a href="https://musoxon-portfilio.vercel.app/" target="_blank" class="link-card sponsor-highlight">
-        <div class="link-left-group">
-          <span style="font-size:24px;">☕</span>
-          <span id="sponsorLabel">Homiylik yoki Hamkorlik</span>
-        </div>
-        <span>→</span>
-      </a>
-    </div>
-
-    <footer>
-      <a href="#" id="footerLink">❤️ Yaratuvchini qo'llab-quvvatlang</a>
-    </footer>
-  </div>
-
-  <script>
-    (function() {
-      // ===== ZARRACHALAR YARATISH =====
-      const particlesContainer = document.getElementById('particlesContainer');
-      const particleCount = 30;
-      
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
+    <script>
+        // ========== THREE.JS BACKGROUND ==========
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         
-        const size = Math.random() * 4 + 2;
-        particle.style.width = size + 'px';
-        particle.style.height = size + 'px';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-        particle.style.animationDelay = Math.random() * 10 + 's';
-        particle.style.opacity = Math.random() * 0.5 + 0.1;
-        
-        particlesContainer.appendChild(particle);
-      }
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x0c0b14, 1);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-      // ===== YULDUZCHALAR YARATISH =====
-      const starsContainer = document.getElementById('starsContainer');
-      const starCount = 15;
-      
-      for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        
-        const size = Math.random() * 10 + 5;
-        star.style.width = size + 'px';
-        star.style.height = size + 'px';
-        star.style.left = Math.random() * 90 + '%';
-        star.style.top = Math.random() * 90 + '%';
-        star.style.animationDelay = Math.random() * 3 + 's';
-        star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        
-        starsContainer.appendChild(star);
-      }
-
-      // ===== TARJIMALAR =====
-      const translations = {
-        uz: {
-          profileName: "Musoxon G",
-          profileUsername: "@musoxon_creator",
-          validLabel: "Amal qilish muddati",
-          copyText: "Karta raqamini nusxalash",
-          anonymous: "🔒 ANONIM · MAXFIY",
-          socialTitle: "Ijtimoiy tarmoqlarda qo'llab-quvvatlang",
-          instaLabel: "Instagram",
-          telegramLabel: "Telegram",
-          youtubeLabel: "YouTube",
-          donateTitle: "Donat orqali qo'llab-quvvatlang",
-          donationAlertsLabel: "DonationAlerts",
-          clickPaymeLabel: "So'mda Donat",
-          sponsorTitle: "Homiylik",
-          sponsorLabel: "Homiylik yoki Hamkorlik",
-          footer: "❤️ Yaratuvchini qo'llab-quvvatlang",
-          copySuccess: "✅ Nusxalandi!"
-        },
-        ru: {
-          profileName: "Musoxon G",
-          profileUsername: "@musoxon_creator",
-          validLabel: "Действителен до",
-          copyText: "Скопировать номер карты",
-          anonymous: "🔒 АНОНИМНО · КОНФИДЕНЦИАЛЬНО",
-          socialTitle: "Поддержите в соцсетях",
-          instaLabel: "Instagram",
-          telegramLabel: "Telegram",
-          youtubeLabel: "YouTube",
-          donateTitle: "Поддержка через донат",
-          donationAlertsLabel: "DonationAlerts",
-          clickPaymeLabel: "Click и Payme",
-          sponsorTitle: "Спонсорство",
-          sponsorLabel: "Спонсорство или сотрудничество",
-          footer: "❤️ Поддержать создателя",
-          copySuccess: "✅ Скопировано!"
-        },
-        en: {
-          profileName: "Musoxon G",
-          profileUsername: "@musoxon_creator",
-          validLabel: "Valid thru",
-          copyText: "Copy card number",
-          anonymous: "🔒 ANONYMOUS · PRIVATE",
-          socialTitle: "Support on social media",
-          instaLabel: "Instagram",
-          telegramLabel: "Telegram",
-          youtubeLabel: "YouTube",
-          donateTitle: "Support via donation",
-          donationAlertsLabel: "DonationAlerts",
-          clickPaymeLabel: "Click & Payme",
-          sponsorTitle: "Sponsorship",
-          sponsorLabel: "Sponsorship or Partnership",
-          footer: "❤️ Support the creator",
-          copySuccess: "✅ Copied!"
-        }
-      };
-
-      let currentLang = "uz";
-
-      const elements = {
-        profileName: document.getElementById('profileName'),
-        profileUsername: document.getElementById('profileUsername'),
-        validLabel: document.getElementById('validLabel'),
-        copyText: document.getElementById('copyText'),
-        anonymousText: document.getElementById('anonymousText'),
-        socialTitle: document.getElementById('socialTitle'),
-        instaLabel: document.getElementById('instaLabel'),
-        telegramLabel: document.getElementById('telegramLabel'),
-        youtubeLabel: document.getElementById('youtubeLabel'),
-        donateTitle: document.getElementById('donateTitle'),
-        donationAlertsLabel: document.getElementById('donationAlertsLabel'),
-        clickPaymeLabel: document.getElementById('clickPaymeLabel'),
-        sponsorTitle: document.getElementById('sponsorTitle'),
-        sponsorLabel: document.getElementById('sponsorLabel'),
-        footerLink: document.getElementById('footerLink'),
-        cardNumber: document.getElementById('cardNumber'),
-        copyButton: document.getElementById('copyButton')
-      };
-
-      function applyLanguage(lang) {
-        const t = translations[lang];
-        if (!t) return;
-        elements.profileName.textContent = t.profileName;
-        elements.profileUsername.textContent = t.profileUsername;
-        elements.validLabel.textContent = t.validLabel;
-        elements.copyText.textContent = t.copyText;
-        elements.anonymousText.innerHTML = t.anonymous;
-        elements.socialTitle.textContent = t.socialTitle;
-        elements.instaLabel.textContent = t.instaLabel;
-        elements.telegramLabel.textContent = t.telegramLabel;
-        elements.youtubeLabel.textContent = t.youtubeLabel;
-        elements.donateTitle.textContent = t.donateTitle;
-        elements.donationAlertsLabel.textContent = t.donationAlertsLabel;
-        elements.clickPaymeLabel.textContent = t.clickPaymeLabel;
-        elements.sponsorTitle.textContent = t.sponsorTitle;
-        elements.sponsorLabel.textContent = t.sponsorLabel;
-        elements.footerLink.textContent = t.footer;
-      }
-
-      document.querySelectorAll('.lang-pill').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          const lang = this.dataset.lang;
-          if (!lang || lang === currentLang) return;
-          document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
-          currentLang = lang;
-          applyLanguage(lang);
+        // Asosiy aylanuvchi ob'ekt
+        const mainGeometry = new THREE.TorusKnotGeometry(1.2, 0.35, 128, 16);
+        const mainMaterial = new THREE.MeshPhongMaterial({
+            color: 0xb184ff,
+            emissive: 0x1a1030,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.4
         });
-      });
+        const mainKnot = new THREE.Mesh(mainGeometry, mainMaterial);
+        scene.add(mainKnot);
 
-      elements.copyButton.addEventListener('click', async () => {
-        const cardNum = elements.cardNumber.textContent.trim();
-        try {
-          await navigator.clipboard.writeText(cardNum);
-          const originalText = elements.copyText.textContent;
-          elements.copyText.textContent = translations[currentLang].copySuccess;
-          elements.copyButton.style.background = 'linear-gradient(135deg, rgba(78, 205, 196, 0.5), rgba(69, 183, 209, 0.5))';
-          setTimeout(() => {
-            elements.copyText.textContent = originalText;
-            elements.copyButton.style.background = '';
-          }, 1700);
-        } catch (err) {
-          alert('Karta raqami: ' + cardNum);
+        // Kichik zarrachalar
+        const particlesGeo = new THREE.BufferGeometry();
+        const particlesCount = 100;
+        const posArray = new Float32Array(particlesCount * 3);
+        
+        for (let i = 0; i < particlesCount * 3; i += 3) {
+            posArray[i] = (Math.random() - 0.5) * 15;
+            posArray[i + 1] = (Math.random() - 0.5) * 15;
+            posArray[i + 2] = (Math.random() - 0.5) * 10 - 5;
         }
-      });
+        
+        particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMat = new THREE.PointsMaterial({
+            size: 0.03,
+            color: 0xb184ff,
+            transparent: true,
+            opacity: 0.6
+        });
+        const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+        scene.add(particlesMesh);
 
-      elements.footerLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        showToast(translations[currentLang].footer, 1800);
-      });
+        // Qo'shimcha geometrik shakllar
+        const shapes = [];
+        for (let i = 0; i < 4; i++) {
+            const geo = new THREE.IcosahedronGeometry(Math.random() * 0.6 + 0.3, 1);
+            const mat = new THREE.MeshPhongMaterial({
+                color: 0xff8a8a,
+                emissive: 0x1f1010,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.25
+            });
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.position.set(
+                (Math.random() - 0.5) * 8,
+                (Math.random() - 0.5) * 8,
+                (Math.random() - 0.5) * 6 - 3
+            );
+            scene.add(mesh);
+            shapes.push(mesh);
+        }
 
-      function showToast(msg, duration = 2000) {
-        const old = document.querySelector('.toast-popup');
-        if (old) old.remove();
-        const toast = document.createElement('div');
-        toast.className = 'toast-popup';
-        toast.textContent = msg;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), duration);
-      }
+        // Yorug'lik
+        const light1 = new THREE.PointLight(0xb184ff, 1.5, 15);
+        light1.position.set(3, 4, 5);
+        scene.add(light1);
+        
+        const light2 = new THREE.PointLight(0xff8a8a, 1.2, 15);
+        light2.position.set(-3, -2, 3);
+        scene.add(light2);
+        
+        const ambient = new THREE.AmbientLight(0x303050);
+        scene.add(ambient);
 
-      applyLanguage('uz');
-    })();
-  </script>
+        camera.position.z = 6;
+
+        // Animatsiya loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            mainKnot.rotation.x += 0.003;
+            mainKnot.rotation.y += 0.007;
+            mainKnot.rotation.z += 0.002;
+            
+            shapes.forEach((shape, i) => {
+                shape.rotation.x += 0.01 + i * 0.002;
+                shape.rotation.y += 0.015 + i * 0.003;
+            });
+            
+            particlesMesh.rotation.y += 0.0005;
+            particlesMesh.rotation.x += 0.0003;
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ========== TARJIMA TIZIMI ==========
+        const translations = {
+            uz: {
+                displayName: "Musoxon G",
+                displayHandle: "@musoxon_creator",
+                validText: "Amal qilish muddati",
+                copyText: "Karta raqamini nusxalash",
+                anonymousText: "🔒 ANONIM · MAXFIY",
+                socialLabel: "Ijtimoiy tarmoqlar",
+                instaText: "Instagram",
+                telegramText: "Telegram",
+                youtubeText: "YouTube",
+                donateLabel: "Donat",
+                donationText: "DonationAlerts",
+                somText: "So'mda Donat",
+                sponsorLabel: "Homiylik",
+                sponsorText: "Homiylik yoki Hamkorlik",
+                footerLink: "❤️ Yaratuvchini qo'llab-quvvatlang",
+                copySuccess: "✅ Nusxalandi!"
+            },
+            ru: {
+                displayName: "Musoxon G",
+                displayHandle: "@musoxon_creator",
+                validText: "Действителен до",
+                copyText: "Скопировать номер карты",
+                anonymousText: "🔒 АНОНИМНО · КОНФИДЕНЦИАЛЬНО",
+                socialLabel: "Социальные сети",
+                instaText: "Instagram",
+                telegramText: "Telegram",
+                youtubeText: "YouTube",
+                donateLabel: "Донат",
+                donationText: "DonationAlerts",
+                somText: "Click и Payme",
+                sponsorLabel: "Спонсорство",
+                sponsorText: "Спонсорство или сотрудничество",
+                footerLink: "❤️ Поддержать создателя",
+                copySuccess: "✅ Скопировано!"
+            },
+            en: {
+                displayName: "Musoxon G",
+                displayHandle: "@musoxon_creator",
+                validText: "Valid thru",
+                copyText: "Copy card number",
+                anonymousText: "🔒 ANONYMOUS · PRIVATE",
+                socialLabel: "Social Media",
+                instaText: "Instagram",
+                telegramText: "Telegram",
+                youtubeText: "YouTube",
+                donateLabel: "Donate",
+                donationText: "DonationAlerts",
+                somText: "Click & Payme",
+                sponsorLabel: "Sponsorship",
+                sponsorText: "Sponsorship or Partnership",
+                footerLink: "❤️ Support the creator",
+                copySuccess: "✅ Copied!"
+            }
+        };
+
+        let currentLang = 'uz';
+
+        function updateLanguage(lang) {
+            const t = translations[lang];
+            if (!t) return;
+            
+            document.getElementById('displayName').textContent = t.displayName;
+            document.getElementById('displayHandle').textContent = t.displayHandle;
+            document.getElementById('validText').textContent = t.validText;
+            document.getElementById('copyText').textContent = t.copyText;
+            document.getElementById('anonymousText').innerHTML = t.anonymousText;
+            document.getElementById('socialLabel').textContent = t.socialLabel;
+            document.getElementById('instaText').textContent = t.instaText;
+            document.getElementById('telegramText').textContent = t.telegramText;
+            document.getElementById('youtubeText').textContent = t.youtubeText;
+            document.getElementById('donateLabel').textContent = t.donateLabel;
+            document.getElementById('donationText').textContent = t.donationText;
+            document.getElementById('somText').textContent = t.somText;
+            document.getElementById('sponsorLabel').textContent = t.sponsorLabel;
+            document.getElementById('sponsorText').textContent = t.sponsorText;
+            document.getElementById('footerLink').textContent = t.footerLink;
+        }
+
+        // Til tugmalari
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentLang = lang;
+                updateLanguage(lang);
+            });
+        });
+
+        // Nusxalash
+        document.getElementById('copyButton').addEventListener('click', async () => {
+            const cardNum = document.getElementById('cardNumDisplay').textContent.trim();
+            try {
+                await navigator.clipboard.writeText(cardNum);
+                const copySpan = document.getElementById('copyText');
+                const original = copySpan.textContent;
+                copySpan.textContent = translations[currentLang].copySuccess;
+                document.getElementById('copyButton').style.background = 'rgba(78, 205, 196, 0.25)';
+                
+                setTimeout(() => {
+                    copySpan.textContent = original;
+                    document.getElementById('copyButton').style.background = '';
+                }, 1800);
+            } catch (err) {
+                alert('Karta raqami: ' + cardNum);
+            }
+        });
+
+        // Footer toast
+        document.getElementById('footerLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast(translations[currentLang].footerLink);
+        });
+
+        function showToast(msg) {
+            const old = document.querySelector('.toast');
+            if (old) old.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.remove(), 2000);
+        }
+
+        // GSAP animatsiyalar
+        gsap.from('.glass-card', {
+            duration: 1.5,
+            y: 60,
+            opacity: 0,
+            ease: 'power4.out'
+        });
+
+        gsap.from('.link-item', {
+            duration: 0.8,
+            x: -30,
+            opacity: 0,
+            stagger: 0.1,
+            ease: 'power3.out',
+            delay: 0.5
+        });
+
+        // Boshlang'ich til
+        updateLanguage('uz');
+    </script>
 </body>
 </html>
