@@ -34,95 +34,6 @@
             pointer-events: none;
         }
 
-        /* Ko'z tugmasi - chap yuqori burchak */
-        .eye-toggle {
-            position: fixed;
-            top: 1.5rem;
-            left: 1.5rem;
-            z-index: 100;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: rgba(255,255,255,0.7);
-            font-size: 1.2rem;
-        }
-
-        .eye-toggle:hover {
-            background: rgba(177, 132, 255, 0.2);
-            border-color: rgba(177, 132, 255, 0.4);
-            color: #b184ff;
-            box-shadow: 0 8px 25px rgba(177, 132, 255, 0.3);
-        }
-
-        .eye-toggle.hidden-mode {
-            background: rgba(177, 132, 255, 0.15);
-            border-color: rgba(177, 132, 255, 0.3);
-            color: #b184ff;
-        }
-
-        /* Ko'rsatma matni */
-        .hint-text {
-            position: fixed;
-            top: 2.5rem;
-            left: 4.5rem;
-            z-index: 100;
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.4);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            pointer-events: none;
-            opacity: 0;
-        }
-
-        .hint-text.visible {
-            opacity: 1;
-        }
-
-        /* Ekran markazidagi kichik indikator */
-        .center-indicator {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 99;
-            pointer-events: none;
-            opacity: 0;
-            transition: all 0.5s ease;
-            text-align: center;
-        }
-
-        .center-indicator.show {
-            opacity: 1;
-        }
-
-        .center-indicator i {
-            font-size: 2.5rem;
-            color: rgba(177, 132, 255, 0.6);
-            animation: indicatorPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes indicatorPulse {
-            0%, 100% { opacity: 0.4; transform: scale(1); }
-            50% { opacity: 0.9; transform: scale(1.1); }
-        }
-
-        .center-indicator p {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.5);
-            margin-top: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
         .main-wrapper {
             position: relative;
             z-index: 10;
@@ -131,15 +42,6 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Yashirish animatsiyasi */
-        .main-wrapper.hidden {
-            opacity: 0;
-            transform: scale(0.95);
-            pointer-events: none;
-            filter: blur(10px);
         }
 
         .glass-card {
@@ -152,20 +54,13 @@
             padding: 2.5rem 2rem 2rem;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        /* Til switcher - o'ng tomonda */
         .lang-switcher {
             display: flex;
+            justify-content: flex-end;
             gap: 8px;
+            margin-bottom: 2rem;
         }
 
         .lang-btn {
@@ -487,39 +382,19 @@
             .glass-card { padding: 1.5rem 1.2rem; border-radius: 30px; }
             .card-number-display { font-size: 1rem; letter-spacing: 2px; }
             .profile-name { font-size: 1.5rem; }
-            .eye-toggle { top: 1rem; left: 1rem; width: 42px; height: 42px; }
-            .hint-text { top: 2rem; left: 4rem; font-size: 0.7rem; }
         }
     </style>
 </head>
 <body>
     <div id="canvas-container"></div>
 
-    <!-- Ko'z tugmasi - chap yuqori burchak -->
-    <button class="eye-toggle" id="eyeToggle" title="Ko'rsatish / Yashirish">
-        <i class="far fa-eye"></i>
-    </button>
-    
-    <!-- Ko'rsatma matni -->
-    <div class="hint-text" id="hintText">Ekran bosing yoki ko'z tugmasini bosing</div>
-
-    <!-- Markaziy indikator (yashirilganda) -->
-    <div class="center-indicator" id="centerIndicator">
-        <i class="far fa-eye"></i>
-        <p>Kontent yashirilgan<br>Ekran bosing yoki ko'z tugmasini bosing</p>
-    </div>
-
-    <!-- Asosiy kontent -->
-    <div class="main-wrapper" id="mainWrapper">
+    <div class="main-wrapper">
         <div class="glass-card">
-            <!-- Sarlavha qatori: Til switcher o'ngda -->
-            <div class="header-row">
-                <div></div> <!-- Bo'sh div, flex uchun -->
-                <div class="lang-switcher">
-                    <button class="lang-btn active" data-lang="uz">UZ</button>
-                    <button class="lang-btn" data-lang="ru">RU</button>
-                    <button class="lang-btn" data-lang="en">EN</button>
-                </div>
+            <!-- Til almashtirish -->
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="uz">UZ</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
+                <button class="lang-btn" data-lang="en">EN</button>
             </div>
 
             <!-- Profil -->
@@ -727,77 +602,6 @@
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // ========== KO'Z TUGMASI VA HIDE/SHOW TIZIMI ==========
-        const eyeToggle = document.getElementById('eyeToggle');
-        const mainWrapper = document.getElementById('mainWrapper');
-        const centerIndicator = document.getElementById('centerIndicator');
-        const hintText = document.getElementById('hintText');
-        const eyeIcon = eyeToggle.querySelector('i');
-        
-        let isContentVisible = true;
-
-        function hideContent() {
-            mainWrapper.classList.add('hidden');
-            centerIndicator.classList.add('show');
-            eyeToggle.classList.add('hidden-mode');
-            eyeIcon.className = 'far fa-eye-slash';
-            hintText.classList.add('visible');
-            isContentVisible = false;
-        }
-
-        function showContent() {
-            mainWrapper.classList.remove('hidden');
-            centerIndicator.classList.remove('show');
-            eyeToggle.classList.remove('hidden-mode');
-            eyeIcon.className = 'far fa-eye';
-            hintText.classList.remove('visible');
-            isContentVisible = true;
-        }
-
-        function toggleContent() {
-            if (isContentVisible) {
-                hideContent();
-            } else {
-                showContent();
-            }
-        }
-
-        // Ko'z tugmasini bosish
-        eyeToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleContent();
-        });
-
-        // Ekranning istalgan joyiga bosish (yashirilganda)
-        document.addEventListener('click', (e) => {
-            // Agar kontent yashirilgan bo'lsa va ko'z tugmasi bosilmagan bo'lsa
-            if (!isContentVisible && e.target !== eyeToggle && !eyeToggle.contains(e.target)) {
-                showContent();
-            }
-        });
-
-        // Ko'rsatma matni ko'rinishi (hover effekti)
-        eyeToggle.addEventListener('mouseenter', () => {
-            hintText.classList.add('visible');
-        });
-
-        eyeToggle.addEventListener('mouseleave', () => {
-            if (isContentVisible) {
-                hintText.classList.remove('visible');
-            }
-        });
-
-        // Klaviatura: Escape tugmasi bilan yashirish
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (isContentVisible) {
-                    hideContent();
-                } else {
-                    showContent();
-                }
-            }
         });
 
         // ========== TARJIMA TIZIMI ==========
