@@ -34,6 +34,24 @@
             pointer-events: none;
         }
 
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(177, 132, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        /* === SELECTION === */
+        ::selection {
+            background: rgba(177, 132, 255, 0.4);
+            color: #fff;
+        }
+
         .main-wrapper {
             position: relative;
             z-index: 10;
@@ -46,68 +64,103 @@
 
         .glass-card {
             width: 100%;
-            max-width: 520px;
+            max-width: 480px;
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             border-radius: 40px;
-            padding: 2.5rem 2rem 2rem;
+            padding: 2rem 1.8rem 1.8rem;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
         }
 
+        /* === TOP ROW: til + ko'z tugmasi === */
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .eye-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: rgba(255,255,255,0.6);
+            font-size: 1rem;
+        }
+
+        .eye-toggle:hover {
+            background: rgba(177, 132, 255, 0.2);
+            border-color: rgba(177, 132, 255, 0.4);
+            color: #b184ff;
+        }
+
+        .eye-toggle.hidden-mode {
+            background: rgba(255, 138, 138, 0.15);
+            border-color: rgba(255, 138, 138, 0.3);
+            color: #ff8a8a;
+        }
+
         .lang-switcher {
             display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-bottom: 2rem;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 4px;
         }
 
         .lang-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
+            background: transparent;
+            border: none;
+            padding: 0.4rem 0.8rem;
             border-radius: 50px;
-            color: rgba(255,255,255,0.6);
-            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
-            backdrop-filter: blur(10px);
         }
 
         .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
             color: #fff;
         }
 
         .lang-btn.active {
             background: linear-gradient(135deg, #b184ff, #ff8a8a);
             color: #fff;
-            border-color: transparent;
         }
 
+        /* === PROFILE === */
         .profile-area {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.8rem;
         }
 
         .avatar-ring {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 1.5rem;
+            width: 85px;
+            height: 85px;
+            margin: 0 auto 1.2rem;
             position: relative;
         }
 
         .avatar-ring::before {
             content: '';
             position: absolute;
-            inset: -4px;
+            inset: -3px;
             border-radius: 50%;
             background: linear-gradient(135deg, #b184ff, #ff8a8a);
-            opacity: 0.5;
-            filter: blur(6px);
+            opacity: 0.4;
+            filter: blur(5px);
         }
 
         .avatar-inner {
@@ -118,38 +171,67 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 2.5rem;
             position: relative;
             z-index: 1;
             border: 2px solid rgba(255,255,255,0.1);
         }
 
         .profile-name {
-            font-size: 2rem;
+            font-size: 1.7rem;
             font-weight: 800;
             letter-spacing: -0.5px;
             background: linear-gradient(135deg, #fff, #e0d0ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
 
         .profile-handle {
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.45);
             font-weight: 500;
-            letter-spacing: 0.5px;
         }
 
+        .online-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.45);
+            margin-top: 0.4rem;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4ecdc4;
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* === CARD === */
         .bank-card {
             background: linear-gradient(145deg, #1a1530, #2a1f40);
             border-radius: 24px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border: 1px solid rgba(177, 132, 255, 0.2);
+            padding: 1.3rem;
+            margin: 1.2rem 0;
+            border: 1px solid rgba(177, 132, 255, 0.15);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .bank-card:hover {
+            border-color: rgba(177, 132, 255, 0.35);
+            box-shadow: 0 10px 30px rgba(177, 132, 255, 0.1);
         }
 
         .bank-card::before {
@@ -159,47 +241,57 @@
             right: -30%;
             width: 180px;
             height: 180px;
-            background: radial-gradient(circle, rgba(177, 132, 255, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(177, 132, 255, 0.08) 0%, transparent 70%);
             border-radius: 50%;
+        }
+
+        .bank-card:active {
+            transform: scale(0.98);
         }
 
         .card-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             position: relative;
             z-index: 1;
         }
 
         .chip-icon {
-            font-size: 2rem;
-            opacity: 0.8;
+            font-size: 1.8rem;
+            opacity: 0.7;
         }
 
         .card-brand {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             font-style: italic;
             letter-spacing: 2px;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255,255,255,0.7);
         }
 
         .card-number-display {
             font-family: 'Courier New', monospace;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            letter-spacing: 3px;
+            letter-spacing: 2.5px;
             text-align: center;
-            padding: 1rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            margin: 1rem 0;
+            padding: 0.8rem;
+            background: rgba(255,255,255,0.04);
+            border-radius: 14px;
+            margin: 0.8rem 0;
             position: relative;
             z-index: 1;
-            border: 1px solid rgba(255,255,255,0.1);
-            word-spacing: 6px;
+            border: 1px solid rgba(255,255,255,0.08);
+            word-spacing: 4px;
+            user-select: all;
+            transition: background 0.3s;
+        }
+
+        .card-number-display:hover {
+            background: rgba(177, 132, 255, 0.08);
         }
 
         .card-bottom {
@@ -208,14 +300,14 @@
             align-items: flex-end;
             position: relative;
             z-index: 1;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
         }
 
         .valid-label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
-            opacity: 0.5;
+            opacity: 0.4;
             display: block;
             margin-bottom: 2px;
         }
@@ -224,23 +316,24 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-size: 1rem;
-            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
         }
 
+        /* === COPY BUTTON === */
         .copy-section {
             text-align: center;
-            margin: 1rem 0 1.5rem;
+            margin: 0.5rem 0 1.2rem;
         }
 
         .copy-btn {
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 0.8rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 0.7rem 1.8rem;
             border-radius: 50px;
             color: #fff;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
@@ -256,100 +349,118 @@
         }
 
         .copy-btn:active {
-            transform: scale(0.97);
+            transform: scale(0.96);
         }
 
+        .copy-btn.copied {
+            background: rgba(78, 205, 196, 0.2);
+            border-color: rgba(78, 205, 196, 0.4);
+        }
+
+        /* === ANONYMOUS === */
         .anonymous-badge {
             text-align: center;
-            padding: 0.8rem;
-            background: rgba(255,255,255,0.03);
+            padding: 0.7rem;
+            background: rgba(255,255,255,0.02);
             border-radius: 50px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255,255,255,0.05);
-            letter-spacing: 0.5px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.04);
         }
 
+        /* === LINKS === */
         .links-section {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1rem;
         }
 
         .section-title {
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 3px;
-            color: rgba(177, 132, 255, 0.7);
+            color: rgba(177, 132, 255, 0.65);
             font-weight: 700;
-            margin-bottom: -0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
         }
 
         .link-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 0.85rem 1.2rem;
             border-radius: 60px;
             text-decoration: none;
             color: #fff;
             font-weight: 500;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            -webkit-tap-highlight-color: transparent;
         }
 
         .link-item:hover {
             background: rgba(177, 132, 255, 0.1);
-            border-color: rgba(177, 132, 255, 0.3);
-            transform: translateX(8px);
+            border-color: rgba(177, 132, 255, 0.25);
+            transform: translateX(6px);
+        }
+
+        .link-item:active {
+            transform: scale(0.98);
         }
 
         .link-left {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .link-left i {
-            font-size: 1.5rem;
-            width: 2rem;
+            font-size: 1.3rem;
+            width: 1.8rem;
             text-align: center;
         }
 
         .link-arrow {
-            font-size: 1.2rem;
-            opacity: 0.5;
+            font-size: 1.1rem;
+            opacity: 0.4;
             transition: all 0.3s;
         }
 
         .link-item:hover .link-arrow {
             opacity: 1;
+            transform: translateX(3px);
         }
 
         .sponsor-link {
-            background: linear-gradient(135deg, rgba(177, 132, 255, 0.12), rgba(255, 138, 138, 0.12));
-            border-color: rgba(177, 132, 255, 0.25);
+            background: linear-gradient(135deg, rgba(177, 132, 255, 0.08), rgba(255, 138, 138, 0.08));
+            border-color: rgba(177, 132, 255, 0.2);
         }
 
         .sponsor-link:hover {
-            background: linear-gradient(135deg, rgba(177, 132, 255, 0.2), rgba(255, 138, 138, 0.2));
+            background: linear-gradient(135deg, rgba(177, 132, 255, 0.18), rgba(255, 138, 138, 0.18));
         }
 
+        /* === FOOTER === */
         .footer-note {
             text-align: center;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(255,255,255,0.04);
         }
 
         .footer-note a {
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.4);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: color 0.3s;
         }
 
@@ -357,19 +468,24 @@
             color: #b184ff;
         }
 
+        /* === TOAST === */
         .toast {
             position: fixed;
             bottom: 2rem;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #b184ff, #ff8a8a);
+            background: linear-gradient(135deg, #1a1530, #2a1f40);
+            border: 1px solid rgba(177, 132, 255, 0.3);
             color: #fff;
-            padding: 1rem 2rem;
+            padding: 0.8rem 1.8rem;
             border-radius: 50px;
             font-weight: 600;
+            font-size: 0.85rem;
             z-index: 100;
-            box-shadow: 0 15px 40px rgba(177, 132, 255, 0.4);
-            animation: toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            animation: toastIn 0.4s ease;
+            pointer-events: none;
         }
 
         @keyframes toastIn {
@@ -377,37 +493,103 @@
             to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
+        /* === CENTER INDICATOR === */
+        .center-indicator {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 99;
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.5s ease;
+            text-align: center;
+        }
+
+        .center-indicator.show {
+            opacity: 1;
+        }
+
+        .center-indicator i {
+            font-size: 2.5rem;
+            color: rgba(177, 132, 255, 0.4);
+            animation: floatUpDown 3s ease-in-out infinite;
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .center-indicator p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.35);
+            margin-top: 0.8rem;
+        }
+
+        .hidden {
+            opacity: 0 !important;
+            transform: scale(0.95) !important;
+            pointer-events: none !important;
+            filter: blur(10px) !important;
+            transition: all 0.5s ease !important;
+        }
+
+        /* === RESPONSIVE === */
         @media (max-width: 600px) {
             .main-wrapper { padding: 1rem; }
             .glass-card { padding: 1.5rem 1.2rem; border-radius: 30px; }
-            .card-number-display { font-size: 1rem; letter-spacing: 2px; }
-            .profile-name { font-size: 1.5rem; }
+            .card-number-display { font-size: 1rem; letter-spacing: 1.5px; }
+            .profile-name { font-size: 1.4rem; }
+            .link-item { padding: 0.75rem 1rem; }
+            .top-row { margin-bottom: 1.2rem; }
+        }
+
+        @media (max-width: 380px) {
+            .glass-card { padding: 1.2rem 1rem; }
+            .lang-btn { padding: 0.35rem 0.6rem; font-size: 0.7rem; }
         }
     </style>
 </head>
 <body>
     <div id="canvas-container"></div>
 
-    <div class="main-wrapper">
+    <!-- Center indicator (hidden mode) -->
+    <div class="center-indicator" id="centerIndicator">
+        <i class="far fa-eye-slash"></i>
+        <p id="indicatorText">Kontent yashirilgan</p>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-wrapper" id="mainWrapper">
         <div class="glass-card">
-            <!-- Til almashtirish -->
-            <div class="lang-switcher">
-                <button class="lang-btn active" data-lang="uz">UZ</button>
-                <button class="lang-btn" data-lang="ru">RU</button>
-                <button class="lang-btn" data-lang="en">EN</button>
+            <!-- Top row: eye toggle + lang switcher -->
+            <div class="top-row">
+                <button class="eye-toggle" id="eyeToggle" title="Ko'rsatish / Yashirish (ESC)">
+                    <i class="far fa-eye"></i>
+                </button>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="uz">UZ</button>
+                    <button class="lang-btn" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
             </div>
 
-            <!-- Profil -->
+            <!-- Profile -->
             <div class="profile-area">
                 <div class="avatar-ring">
                     <div class="avatar-inner">🎮</div>
                 </div>
                 <div class="profile-name" id="displayName">Musoxon G</div>
                 <div class="profile-handle" id="displayHandle">@musoxon_creator</div>
+                <div class="online-status">
+                    <span class="status-dot"></span>
+                    <span id="onlineText">Online</span>
+                </div>
             </div>
 
-            <!-- Karta -->
-            <div class="bank-card">
+            <!-- Card (clickable) -->
+            <div class="bank-card" id="bankCard" title="Karta raqamini nusxalash uchun bosing">
                 <div class="card-top">
                     <span class="chip-icon">💳</span>
                     <span class="card-brand">Mastercard</span>
@@ -422,7 +604,7 @@
                 </div>
             </div>
 
-            <!-- Nusxalash -->
+            <!-- Copy button -->
             <div class="copy-section">
                 <button class="copy-btn" id="copyButton">
                     <i class="far fa-copy"></i>
@@ -434,11 +616,11 @@
                 🔒 ANONIM · MAXFIY
             </div>
 
-            <!-- Linklar -->
+            <!-- Links -->
             <div class="links-section">
                 <div class="section-title" id="socialLabel">Ijtimoiy tarmoqlar</div>
                 
-                <a href="https://www.instagram.com/musoxon1202?igsh=MTBzMDJyNDUxMGFoZA==" target="_blank" class="link-item">
+                <a href="https://www.instagram.com/musoxon1202?igsh=MTBzMDJyNDUxMGFoZA==" target="_blank" class="link-item" rel="noopener">
                     <div class="link-left">
                         <i class="fab fa-instagram" style="color: #E4405F;"></i>
                         <span id="instaText">Instagram</span>
@@ -446,7 +628,7 @@
                     <span class="link-arrow">→</span>
                 </a>
 
-                <a href="https://t.me/zetra_studio" target="_blank" class="link-item">
+                <a href="https://t.me/zetra_studio" target="_blank" class="link-item" rel="noopener">
                     <div class="link-left">
                         <i class="fab fa-telegram-plane" style="color: #26A5E4;"></i>
                         <span id="telegramText">Telegram</span>
@@ -454,7 +636,7 @@
                     <span class="link-arrow">→</span>
                 </a>
 
-                <a href="https://youtube.com/@zetra-7?si=rqU8KEGs7fBLMh40" target="_blank" class="link-item">
+                <a href="https://youtube.com/@zetra-7?si=rqU8KEGs7fBLMh40" target="_blank" class="link-item" rel="noopener">
                     <div class="link-left">
                         <i class="fab fa-youtube" style="color: #FF0000;"></i>
                         <span id="youtubeText">YouTube</span>
@@ -464,9 +646,9 @@
 
                 <div class="section-title" id="donateLabel">Donat</div>
 
-                <a href="https://dalink.to/musoxon_" target="_blank" class="link-item">
+                <a href="https://dalink.to/musoxon_" target="_blank" class="link-item" rel="noopener">
                     <div class="link-left">
-                        <span style="font-size:1.5rem;">💵</span>
+                        <span style="font-size:1.3rem;">💵</span>
                         <span id="donationText">DonationAlerts</span>
                     </div>
                     <span class="link-arrow">→</span>
@@ -474,7 +656,7 @@
 
                 <a href="som.html" target="_self" class="link-item">
                     <div class="link-left">
-                        <span style="font-size:1.5rem;">💳</span>
+                        <span style="font-size:1.3rem;">💳</span>
                         <span id="somText">So'mda Donat</span>
                     </div>
                     <span class="link-arrow">→</span>
@@ -482,9 +664,9 @@
 
                 <div class="section-title" id="sponsorLabel">Homiylik</div>
 
-                <a href="https://musoxon-portfilio.vercel.app/" target="_blank" class="link-item sponsor-link">
+                <a href="https://musoxon-portfilio.vercel.app/" target="_blank" class="link-item sponsor-link" rel="noopener">
                     <div class="link-left">
-                        <span style="font-size:1.5rem;">☕</span>
+                        <span style="font-size:1.3rem;">☕</span>
                         <span id="sponsorText">Homiylik yoki Hamkorlik</span>
                     </div>
                     <span class="link-arrow">→</span>
@@ -509,93 +691,60 @@
         renderer.setClearColor(0x0c0b14, 1);
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        // Asosiy aylanuvchi ob'ekt
         const mainGeometry = new THREE.TorusKnotGeometry(1.2, 0.35, 128, 16);
         const mainMaterial = new THREE.MeshPhongMaterial({
-            color: 0xb184ff,
-            emissive: 0x1a1030,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.4
+            color: 0xb184ff, emissive: 0x1a1030, wireframe: true, transparent: true, opacity: 0.4
         });
         const mainKnot = new THREE.Mesh(mainGeometry, mainMaterial);
         scene.add(mainKnot);
 
-        // Kichik zarrachalar
         const particlesGeo = new THREE.BufferGeometry();
         const particlesCount = 100;
         const posArray = new Float32Array(particlesCount * 3);
-        
         for (let i = 0; i < particlesCount * 3; i += 3) {
             posArray[i] = (Math.random() - 0.5) * 15;
             posArray[i + 1] = (Math.random() - 0.5) * 15;
             posArray[i + 2] = (Math.random() - 0.5) * 10 - 5;
         }
-        
         particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const particlesMat = new THREE.PointsMaterial({
-            size: 0.03,
-            color: 0xb184ff,
-            transparent: true,
-            opacity: 0.6
-        });
+        const particlesMat = new THREE.PointsMaterial({ size: 0.03, color: 0xb184ff, transparent: true, opacity: 0.6 });
         const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
         scene.add(particlesMesh);
 
-        // Qo'shimcha geometrik shakllar
         const shapes = [];
         for (let i = 0; i < 4; i++) {
             const geo = new THREE.IcosahedronGeometry(Math.random() * 0.6 + 0.3, 1);
             const mat = new THREE.MeshPhongMaterial({
-                color: 0xff8a8a,
-                emissive: 0x1f1010,
-                wireframe: true,
-                transparent: true,
-                opacity: 0.25
+                color: 0xff8a8a, emissive: 0x1f1010, wireframe: true, transparent: true, opacity: 0.25
             });
             const mesh = new THREE.Mesh(geo, mat);
-            mesh.position.set(
-                (Math.random() - 0.5) * 8,
-                (Math.random() - 0.5) * 8,
-                (Math.random() - 0.5) * 6 - 3
-            );
+            mesh.position.set((Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 6 - 3);
             scene.add(mesh);
             shapes.push(mesh);
         }
 
-        // Yorug'lik
         const light1 = new THREE.PointLight(0xb184ff, 1.5, 15);
         light1.position.set(3, 4, 5);
         scene.add(light1);
-        
         const light2 = new THREE.PointLight(0xff8a8a, 1.2, 15);
         light2.position.set(-3, -2, 3);
         scene.add(light2);
-        
-        const ambient = new THREE.AmbientLight(0x303050);
-        scene.add(ambient);
-
+        scene.add(new THREE.AmbientLight(0x303050));
         camera.position.z = 6;
 
-        // Animatsiya loop - FAQAT 3D BACKGROUND
         function animate() {
             requestAnimationFrame(animate);
-            
             mainKnot.rotation.x += 0.003;
             mainKnot.rotation.y += 0.007;
             mainKnot.rotation.z += 0.002;
-            
             shapes.forEach((shape, i) => {
                 shape.rotation.x += 0.01 + i * 0.002;
                 shape.rotation.y += 0.015 + i * 0.003;
             });
-            
             particlesMesh.rotation.y += 0.0005;
             particlesMesh.rotation.x += 0.0003;
-            
             renderer.render(scene, camera);
         }
-        
         animate();
 
         window.addEventListener('resize', () => {
@@ -604,88 +753,96 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // ========== TARJIMA TIZIMI ==========
+        // ========== HIDE/SHOW ==========
+        const eyeToggle = document.getElementById('eyeToggle');
+        const mainWrapper = document.getElementById('mainWrapper');
+        const centerIndicator = document.getElementById('centerIndicator');
+        const eyeIcon = eyeToggle.querySelector('i');
+        let isVisible = true;
+
+        function hide() {
+            mainWrapper.classList.add('hidden');
+            centerIndicator.classList.add('show');
+            eyeToggle.classList.add('hidden-mode');
+            eyeIcon.className = 'far fa-eye-slash';
+            isVisible = false;
+        }
+
+        function show() {
+            mainWrapper.classList.remove('hidden');
+            centerIndicator.classList.remove('show');
+            eyeToggle.classList.remove('hidden-mode');
+            eyeIcon.className = 'far fa-eye';
+            isVisible = true;
+        }
+
+        eyeToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            isVisible ? hide() : show();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!isVisible && e.target !== eyeToggle && !eyeToggle.contains(e.target)) show();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') isVisible ? hide() : show();
+        });
+
+        // ========== TRANSLATIONS ==========
         const translations = {
             uz: {
-                displayName: "Musoxon G",
-                displayHandle: "@musoxon_creator",
-                validText: "Amal qilish muddati",
-                copyText: "Karta raqamini nusxalash",
-                anonymousText: "🔒 ANONIM · MAXFIY",
-                socialLabel: "Ijtimoiy tarmoqlar",
-                instaText: "Instagram",
-                telegramText: "Telegram",
-                youtubeText: "YouTube",
-                donateLabel: "Donat",
-                donationText: "DonationAlerts",
-                somText: "So'mda Donat",
-                sponsorLabel: "Homiylik",
-                sponsorText: "Homiylik yoki Hamkorlik",
-                footerLink: "❤️ Yaratuvchini qo'llab-quvvatlang",
-                copySuccess: "✅ Nusxalandi!"
+                displayName: "Musoxon G", displayHandle: "@musoxon_creator", onlineText: "Online",
+                validText: "Amal qilish muddati", copyText: "Karta raqamini nusxalash",
+                copySuccess: "✅ Nusxalandi!", anonymousText: "🔒 ANONIM · MAXFIY",
+                socialLabel: "Ijtimoiy tarmoqlar", instaText: "Instagram", telegramText: "Telegram",
+                youtubeText: "YouTube", donateLabel: "Donat", donationText: "DonationAlerts",
+                somText: "So'mda Donat", sponsorLabel: "Homiylik", sponsorText: "Homiylik yoki Hamkorlik",
+                footerLink: "❤️ Yaratuvchini qo'llab-quvvatlang", indicatorText: "Kontent yashirilgan"
             },
             ru: {
-                displayName: "Musoxon G",
-                displayHandle: "@musoxon_creator",
-                validText: "Действителен до",
-                copyText: "Скопировать номер карты",
-                anonymousText: "🔒 АНОНИМНО · КОНФИДЕНЦИАЛЬНО",
-                socialLabel: "Социальные сети",
-                instaText: "Instagram",
-                telegramText: "Telegram",
-                youtubeText: "YouTube",
-                donateLabel: "Донат",
-                donationText: "DonationAlerts",
-                somText: "Click и Payme",
-                sponsorLabel: "Спонсорство",
-                sponsorText: "Спонсорство или сотрудничество",
-                footerLink: "❤️ Поддержать создателя",
-                copySuccess: "✅ Скопировано!"
+                displayName: "Musoxon G", displayHandle: "@musoxon_creator", onlineText: "Онлайн",
+                validText: "Действителен до", copyText: "Скопировать номер карты",
+                copySuccess: "✅ Скопировано!", anonymousText: "🔒 АНОНИМНО · КОНФИДЕНЦИАЛЬНО",
+                socialLabel: "Социальные сети", instaText: "Instagram", telegramText: "Telegram",
+                youtubeText: "YouTube", donateLabel: "Донат", donationText: "DonationAlerts",
+                somText: "Click и Payme", sponsorLabel: "Спонсорство", sponsorText: "Спонсорство или сотрудничество",
+                footerLink: "❤️ Поддержать создателя", indicatorText: "Контент скрыт"
             },
             en: {
-                displayName: "Musoxon G",
-                displayHandle: "@musoxon_creator",
-                validText: "Valid thru",
-                copyText: "Copy card number",
-                anonymousText: "🔒 ANONYMOUS · PRIVATE",
-                socialLabel: "Social Media",
-                instaText: "Instagram",
-                telegramText: "Telegram",
-                youtubeText: "YouTube",
-                donateLabel: "Donate",
-                donationText: "DonationAlerts",
-                somText: "Click & Payme",
-                sponsorLabel: "Sponsorship",
-                sponsorText: "Sponsorship or Partnership",
-                footerLink: "❤️ Support the creator",
-                copySuccess: "✅ Copied!"
+                displayName: "Musoxon G", displayHandle: "@musoxon_creator", onlineText: "Online",
+                validText: "Valid thru", copyText: "Copy card number",
+                copySuccess: "✅ Copied!", anonymousText: "🔒 ANONYMOUS · PRIVATE",
+                socialLabel: "Social Media", instaText: "Instagram", telegramText: "Telegram",
+                youtubeText: "YouTube", donateLabel: "Donate", donationText: "DonationAlerts",
+                somText: "Click & Payme", sponsorLabel: "Sponsorship", sponsorText: "Sponsorship or Partnership",
+                footerLink: "❤️ Support the creator", indicatorText: "Content Hidden"
             }
         };
 
-        let currentLang = 'uz';
+        let currentLang = localStorage.getItem('preferredLang') || 'uz';
+        if (!translations[currentLang]) currentLang = 'uz';
 
         function updateLanguage(lang) {
             const t = translations[lang];
             if (!t) return;
-            
-            document.getElementById('displayName').textContent = t.displayName;
-            document.getElementById('displayHandle').textContent = t.displayHandle;
-            document.getElementById('validText').textContent = t.validText;
-            document.getElementById('copyText').textContent = t.copyText;
-            document.getElementById('anonymousText').innerHTML = t.anonymousText;
-            document.getElementById('socialLabel').textContent = t.socialLabel;
-            document.getElementById('instaText').textContent = t.instaText;
-            document.getElementById('telegramText').textContent = t.telegramText;
-            document.getElementById('youtubeText').textContent = t.youtubeText;
-            document.getElementById('donateLabel').textContent = t.donateLabel;
-            document.getElementById('donationText').textContent = t.donationText;
-            document.getElementById('somText').textContent = t.somText;
-            document.getElementById('sponsorLabel').textContent = t.sponsorLabel;
-            document.getElementById('sponsorText').textContent = t.sponsorText;
-            document.getElementById('footerLink').textContent = t.footerLink;
+            const ids = {
+                displayName: 'displayName', displayHandle: 'displayHandle', onlineText: 'onlineText',
+                validText: 'validText', copyText: 'copyText', anonymousText: 'anonymousText',
+                socialLabel: 'socialLabel', instaText: 'instaText', telegramText: 'telegramText',
+                youtubeText: 'youtubeText', donateLabel: 'donateLabel', donationText: 'donationText',
+                somText: 'somText', sponsorLabel: 'sponsorLabel', sponsorText: 'sponsorText',
+                footerLink: 'footerLink', indicatorText: 'indicatorText'
+            };
+            Object.entries(ids).forEach(([key, id]) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (key === 'anonymousText') el.innerHTML = t[key];
+                    else el.textContent = t[key];
+                }
+            });
         }
 
-        // Til tugmalari
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const lang = this.dataset.lang;
@@ -693,48 +850,60 @@
                 this.classList.add('active');
                 currentLang = lang;
                 updateLanguage(lang);
+                localStorage.setItem('preferredLang', lang);
             });
         });
 
-        // Nusxalash
-        document.getElementById('copyButton').addEventListener('click', async () => {
+        // Set active lang button on load
+        document.querySelectorAll('.lang-btn').forEach(b => {
+            b.classList.remove('active');
+            if (b.dataset.lang === currentLang) b.classList.add('active');
+        });
+        updateLanguage(currentLang);
+
+        // ========== COPY (button + card click) ==========
+        async function copyCard() {
             const cardNum = document.getElementById('cardNumDisplay').textContent.trim();
             try {
                 await navigator.clipboard.writeText(cardNum);
+                const copyBtn = document.getElementById('copyButton');
                 const copySpan = document.getElementById('copyText');
-                const original = copySpan.textContent;
+                const orig = copySpan.textContent;
                 copySpan.textContent = translations[currentLang].copySuccess;
-                document.getElementById('copyButton').style.background = 'rgba(78, 205, 196, 0.2)';
-                
+                copyBtn.classList.add('copied');
                 setTimeout(() => {
-                    copySpan.textContent = original;
-                    document.getElementById('copyButton').style.background = '';
+                    copySpan.textContent = orig;
+                    copyBtn.classList.remove('copied');
                 }, 1800);
-            } catch (err) {
-                alert('Karta raqami: ' + cardNum);
+                showToast(translations[currentLang].copySuccess);
+            } catch {
+                showToast(cardNum);
             }
-        });
+        }
 
-        // Footer toast
+        document.getElementById('copyButton').addEventListener('click', copyCard);
+        document.getElementById('bankCard').addEventListener('click', copyCard);
+
+        // ========== FOOTER ==========
         document.getElementById('footerLink').addEventListener('click', (e) => {
             e.preventDefault();
-            showToast(translations[currentLang].footerLink);
+            showToast('❤️ ' + translations[currentLang].footerLink.replace('❤️ ', ''));
         });
 
+        // ========== TOAST ==========
         function showToast(msg) {
             const old = document.querySelector('.toast');
-            if (old) old.remove();
-            
+            if (old) { old.remove(); clearTimeout(old._timeout); }
             const toast = document.createElement('div');
             toast.className = 'toast';
             toast.textContent = msg;
             document.body.appendChild(toast);
-            
-            setTimeout(() => toast.remove(), 2000);
+            toast._timeout = setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
         }
-
-        // Boshlang'ich til
-        updateLanguage('uz');
     </script>
 </body>
 </html>
