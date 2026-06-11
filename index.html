@@ -34,7 +34,6 @@
             pointer-events: none;
         }
 
-        /* === SCROLLBAR === */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -46,7 +45,6 @@
             border-radius: 3px;
         }
 
-        /* === SELECTION === */
         ::selection {
             background: rgba(177, 132, 255, 0.4);
             color: #fff;
@@ -74,7 +72,6 @@
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
         }
 
-        /* === TOP ROW: til + ko'z tugmasi === */
         .top-row {
             display: flex;
             justify-content: space-between;
@@ -147,8 +144,8 @@
         }
 
         .avatar-ring {
-            width: 85px;
-            height: 85px;
+            width: 90px;
+            height: 90px;
             margin: 0 auto 1.2rem;
             position: relative;
         }
@@ -159,8 +156,8 @@
             inset: -3px;
             border-radius: 50%;
             background: linear-gradient(135deg, #b184ff, #ff8a8a);
-            opacity: 0.4;
-            filter: blur(5px);
+            opacity: 0.5;
+            filter: blur(6px);
         }
 
         .avatar-inner {
@@ -171,10 +168,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
             position: relative;
             z-index: 1;
-            border: 2px solid rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.15);
+            overflow: hidden;
+        }
+
+        /* Avatar rasmi */
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .profile-name {
@@ -543,11 +548,13 @@
             .profile-name { font-size: 1.4rem; }
             .link-item { padding: 0.75rem 1rem; }
             .top-row { margin-bottom: 1.2rem; }
+            .avatar-ring { width: 80px; height: 80px; }
         }
 
         @media (max-width: 380px) {
             .glass-card { padding: 1.2rem 1rem; }
             .lang-btn { padding: 0.35rem 0.6rem; font-size: 0.7rem; }
+            .avatar-ring { width: 70px; height: 70px; }
         }
     </style>
 </head>
@@ -578,7 +585,12 @@
             <!-- Profile -->
             <div class="profile-area">
                 <div class="avatar-ring">
-                    <div class="avatar-inner">🎮</div>
+                    <div class="avatar-inner">
+                        <!-- Avatar rasmi - shu yerni o'zgartiring -->
+                        <img class="avatar-img" src="img/avatar.png" alt="Musoxon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <!-- Fallback emoji (rasm yuklanmasa ko'rinadi) -->
+                        <span class="avatar-emoji" style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 2.5rem;">🎮</span>
+                    </div>
                 </div>
                 <div class="profile-name" id="displayName">Musoxon G</div>
                 <div class="profile-handle" id="displayHandle">@musoxon_creator</div>
@@ -854,14 +866,13 @@
             });
         });
 
-        // Set active lang button on load
         document.querySelectorAll('.lang-btn').forEach(b => {
             b.classList.remove('active');
             if (b.dataset.lang === currentLang) b.classList.add('active');
         });
         updateLanguage(currentLang);
 
-        // ========== COPY (button + card click) ==========
+        // ========== COPY ==========
         async function copyCard() {
             const cardNum = document.getElementById('cardNumDisplay').textContent.trim();
             try {
