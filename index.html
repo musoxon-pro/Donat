@@ -21,7 +21,6 @@
             --text-secondary: #6b7280;
             --border: #e5e7eb;
             --accent: #059669;
-            --accent-light: #ecfdf5;
             --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
             --radius: 20px;
@@ -293,7 +292,7 @@
             <div class="card-row">
                 <div class="bank-icon">MC</div>
                 <div class="card-number" onclick="copyCard()" title="Click to copy">
-                    5476 3813 8075 2921
+                    4231 2000 7276 5778
                 </div>
             </div>
             <div class="card-holder">GULMUHAMMADOV MUSOXON</div>
@@ -308,13 +307,24 @@
             </div>
         </div>
 
-        <!-- Donation link (updated) -->
-        <a href="https://dalink.to/musoxon_" 
+        <!-- Donation link (UZS) -->
+        <a href="https://donatfull.vercel.app/som.html/" 
            class="link-card" target="_blank" rel="noopener">
             <div class="link-icon">🔗</div>
             <div class="link-info">
+                <div class="link-title">Donate in UZS</div>
+                <div class="link-desc">Support via UZS donation link</div>
+            </div>
+            <div class="link-arrow">→</div>
+        </a>
+
+        <!-- Additional link (original) -->
+        <a href="https://dalink.to/musoxon_" 
+           class="link-card" target="_blank" rel="noopener" style="margin-top: 12px;">
+            <div class="link-icon">🌐</div>
+            <div class="link-info">
                 <div class="link-title">Donate via link</div>
-                <div class="link-desc">Support quickly through the donation link</div>
+                <div class="link-desc">Alternative donation link</div>
             </div>
             <div class="link-arrow">→</div>
         </a>
@@ -324,8 +334,8 @@
 
     <script>
         // UPDATED: new card number (Mastercard)
-        const cardNumber = "5476381380752921";
-        const cardFormatted = "5476 3813 8075 2921";
+        const cardNumber = "4231200072765778";
+        const cardFormatted = "4231 2000 7276 5778";
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
