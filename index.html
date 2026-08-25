@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Gulmuhammadov Musoxon · Donate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --text: #1a1a1a;
+            --text-secondary: #6b7280;
+            --border: #e5e7eb;
+            --accent: #059669;
+            --accent-light: #ecfdf5;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+            --radius: 20px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 440px;
+            width: 100%;
+        }
+
+        /* Profile */
+        .profile {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .avatar {
+            width: 72px;
+            height: 72px;
+            background: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            font-size: 34px;
+        }
+
+        .profile-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+        }
+
+        .profile-bio {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Card */
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .card-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        .card-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .bank-icon {
+            width: 42px;
+            height: 28px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .card-number {
+            font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            color: var(--text);
+            cursor: pointer;
+            padding: 4px 0;
+            user-select: all;
+        }
+
+        .card-holder {
+            font-size: 12px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 500;
+            padding-left: 54px;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 16px 0;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: inherit;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+        }
+
+        .btn:active {
+            background: #f3f4f6;
+            transform: scale(0.97);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+            border: none;
+        }
+
+        .btn-accent:active {
+            background: #047857;
+        }
+
+        /* Link */
+        .link-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+
+        .link-card:active {
+            background: #f9fafb;
+            transform: scale(0.98);
+        }
+
+        .link-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .link-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .link-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .link-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 1px;
+        }
+
+        .link-arrow {
+            color: #9ca3af;
+            font-size: 16px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(120px);
+            background: #1f2937;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 100;
+            transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 380px) {
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast" id="toast">
+        <span>✅</span> <span id="toastMsg">Copied</span>
+    </div>
+
+    <div class="container">
+        <!-- Profile -->
+        <div class="profile">
+            <div class="avatar">🤝</div>
+            <h1 class="profile-name">Gulmuhammadov Musoxon</h1>
+            <p class="profile-bio">Thank you for your support</p>
+        </div>
+
+        <!-- Card -->
+        <div class="card">
+            <div class="card-label">💳 Virtual Card</div>
+            <div class="card-row">
+                <div class="bank-icon">MC</div>
+                <div class="card-number" onclick="copyCard()" title="Click to copy">
+                    5476 3813 8075 2921
+                </div>
+            </div>
+            <div class="card-holder">GULMUHAMMADOV MUSOXON</div>
+            <div class="divider"></div>
+            <div class="btn-group">
+                <button class="btn btn-accent" onclick="copyCard()">
+                    📋 Copy number
+                </button>
+                <button class="btn" onclick="copyFull()">
+                    📝 Full details
+                </button>
+            </div>
+        </div>
+
+        <!-- Donation link (updated) -->
+        <a href="https://dalink.to/musoxon_" 
+           class="link-card" target="_blank" rel="noopener">
+            <div class="link-icon">🔗</div>
+            <div class="link-info">
+                <div class="link-title">Donate via link</div>
+                <div class="link-desc">Support quickly through the donation link</div>
+            </div>
+            <div class="link-arrow">→</div>
+        </a>
+
+        <p class="footer-text">Secure virtual card • revocable at any time</p>
+    </div>
+
+    <script>
+        // UPDATED: new card number (Mastercard)
+        const cardNumber = "5476381380752921";
+        const cardFormatted = "5476 3813 8075 2921";
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toastMsg');
+            msgEl.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+
+        function copyCard() {
+            navigator.clipboard.writeText(cardNumber).then(() => {
+                showToast('Card number copied');
+            }).catch(() => {
+                showToast('Error copying');
+            });
+        }
+
+        function copyFull() {
+            const full = `Card: ${cardFormatted}\nName: GULMUHAMMADOV MUSOXON\nBank: Mastercard`;
+            navigator.clipboard.writeText(full).then(() => {
+                showToast('Full details copied');
+            }).catch(() => {
+                showToast('Error copying');
+            });
+        }
+    </script>
+</body>
+</html>
